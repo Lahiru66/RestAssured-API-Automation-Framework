@@ -1,9 +1,20 @@
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import static org.testng.Assert.assertEquals;
 
 public class GetAPI {
+
+    public static SoftAssert softAssert;
+
+    @BeforeMethod
+    public void setUp() {
+        softAssert = new SoftAssert();
+    }
 
     @Test
     public void testGetExampleAPI() {
@@ -23,10 +34,10 @@ public class GetAPI {
         String responseBody = response.getBody().asString();
 
         // Perform assertions on the response body (for example, checking if it contains certain text)
-        assertEquals(responseBody.contains("userId"), true, "Response body does not contain 'userId'");
-        assertEquals(responseBody.contains("id"), true, "Response body does not contain 'id'");
-        assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
-        assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
+        softAssert.assertEquals(responseBody.contains("userId"), true, "Response body does not contain 'userId'");
+        softAssert.assertEquals(responseBody.contains("id"), true, "Response body does not contain 'id'");
+        softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
+        softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
     }
 
 }
