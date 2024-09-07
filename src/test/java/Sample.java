@@ -1,15 +1,18 @@
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 
-public class GetAPI {
+public class Sample {
 
     public static SoftAssert softAssert;
+
+    public static Response response;
 
     @BeforeMethod
     public void setUp() {
@@ -21,8 +24,13 @@ public class GetAPI {
         // Define the base URI where the API is hosted
         RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
 
-        // Send a GET request to the specific endpoint (/posts/1 in this example)
-        Response response = RestAssured.get("/posts/1");
+        response = given()
+                .contentType("application/json")
+                .relaxedHTTPSValidation()
+                .when()
+                .get("/posts/1")
+                .then()
+                .extract().response();
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
@@ -40,5 +48,7 @@ public class GetAPI {
         softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
     }
 
+
 }
+
 
