@@ -5,11 +5,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 
 public class Sample {
+    private static final Logger logger = LogManager.getLogger(Sample.class);
 
     public static SoftAssert softAssert;
 
@@ -39,6 +42,7 @@ public class Sample {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
+        logger.info("status code is" + statusCode);
 
         // Assert that the status code is 200 (OK)
         assertEquals(statusCode, 200, "Status code is not 200");
@@ -67,6 +71,7 @@ public class Sample {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
+        logger.info("status code is" + statusCode);
 
         // Assert that the status code is 200 (OK)
         assertEquals(statusCode, 201, "Status code is not 200");
