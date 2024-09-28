@@ -7,11 +7,13 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utils.CommonValidations;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
+import static utils.CommonValidations.verifyResponseCode;
 
-public class Sample {
+public class Sample extends TestBase {
     private static final Logger logger = LogManager.getLogger(Sample.class);
 
     public static SoftAssert softAssert;
@@ -44,8 +46,7 @@ public class Sample {
         int statusCode = response.getStatusCode();
         logger.info("status code is" + statusCode);
 
-        // Assert that the status code is 200 (OK)
-        assertEquals(statusCode, 200, "Status code is not 200");
+        verifyResponseCode(statusCode,200);
 
         // Retrieve the response body as a String
         String responseBody = response.getBody().asString();
@@ -73,8 +74,7 @@ public class Sample {
         int statusCode = response.getStatusCode();
         logger.info("status code is" + statusCode);
 
-        // Assert that the status code is 200 (OK)
-        assertEquals(statusCode, 201, "Status code is not 200");
+        verifyResponseCode(statusCode,201);
 
         softAssert.assertEquals("foo", response.jsonPath().getString("title"));
         softAssert.assertEquals("bar", response.jsonPath().getString("body"));
