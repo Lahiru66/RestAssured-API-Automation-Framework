@@ -21,7 +21,7 @@ public class Sample extends TestBase {
     public static Response response;
 
     private static String requestBody = "{\n" +
-            "  \"title\": \"foo\",\n" +
+            "  \"title\": \"abcd\",\n" +
             "  \"body\": \"bar\",\n" +
             "  \"userId\": \"1\" \n}";
 
