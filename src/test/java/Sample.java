@@ -1,13 +1,12 @@
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.CommonValidations;
+import service.PostDTO;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
@@ -20,10 +19,10 @@ public class Sample extends TestBase {
 
     public static Response response;
 
-    private static String requestBody = "{\n" +
-            "  \"title\": \"abcd\",\n" +
-            "  \"body\": \"bar\",\n" +
-            "  \"userId\": \"1\" \n}";
+    PostDTO postDTO = PostDTO.builder()
+            .title("any")
+            .body("ok")
+            .userId("right").build();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
@@ -64,7 +63,7 @@ public class Sample extends TestBase {
         Response response = given()
                 .header("Content-type", "application/json")
                 .and()
-                .body(requestBody)
+                .body(postDTO)
                 .when()
                 .post("/posts")
                 .then()
