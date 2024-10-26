@@ -1,4 +1,4 @@
-package service;
+package dto;
 
 import lombok.Builder;
 import lombok.Data;

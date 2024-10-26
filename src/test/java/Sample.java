@@ -1,18 +1,22 @@
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import service.PostDTO;
+import service.Helper;
+import dto.PostDTO;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static utils.CommonValidations.verifyResponseCode;
 
 public class Sample extends TestBase {
+
+    public Helper helper;
     private static final Logger logger = LogManager.getLogger(Sample.class);
 
     public static SoftAssert softAssert;
@@ -23,6 +27,12 @@ public class Sample extends TestBase {
             .title("any")
             .body("ok")
             .userId("right").build();
+
+
+    @BeforeClass
+    public void serviceSetup(){
+        helper = new Helper();
+    }
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
@@ -60,14 +70,8 @@ public class Sample extends TestBase {
 
     @Test(enabled = true, priority = 2, description = "create posts")
     public void postRequest() {
-        Response response = given()
-                .header("Content-type", "application/json")
-                .and()
-                .body(postDTO)
-                .when()
-                .post("/posts")
-                .then()
-                .extract().response();
+
+        Response response = helper.createPost(postDTO);
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
