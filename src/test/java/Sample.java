@@ -29,7 +29,7 @@ public class Sample extends TestBase {
             .userId("right").build();
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void serviceSetup(){
         helper = new Helper();
     }
