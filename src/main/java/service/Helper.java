@@ -3,6 +3,7 @@ package service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.PostDTO;
+import endpoints.Routes;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
@@ -25,7 +26,7 @@ public class Helper {
                     .header("Content-type", "application/json")
                     .body(jsonBody)
                     .when()
-                    .post("/posts")
+                    .post(Routes.base_URL)
                     .then()
                     .extract().response();
 
@@ -38,6 +39,23 @@ public class Helper {
 
         return response;
     }
+
+
+    public Response getPost(){
+        Response response = null;
+
+        response = given()
+               // .pathParams("id", id)
+                .header("Content-type", "application/json")
+                .when()
+                .get("/posts/1")
+                .then()
+                .extract().response();
+
+        return response;
+
+    }
+
 
 }
 
