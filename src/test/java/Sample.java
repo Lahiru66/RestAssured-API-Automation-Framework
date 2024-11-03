@@ -1,4 +1,3 @@
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -9,11 +8,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.Helper;
 import dto.PostDTO;
+import utils.CommonUtils;
 import utils.StatusCodes;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
-import static utils.CommonValidations.verifyResponseCode;
+import static validations.CommonValidations.verifyResponseCode;
 import static utils.Constants.*;
 
 public class Sample extends TestBase {
@@ -38,12 +38,16 @@ public class Sample extends TestBase {
     @Test(enabled = true, priority = 1, description = "create posts")
     public void postRequest() {
 
-        PostDTO postDTO = PostDTO.builder()
-                .title("NYC")
-                .body("NY City")
-                .userId("123").build();
+        String randomTitle = CommonUtils.generateRandomString();
+        String randomBody = CommonUtils.generateRandomString();
+        String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
 
-        Response response = helper.createPost(postDTO);
+        PostDTO postDTO = PostDTO.builder()
+                .title(randomTitle)
+                .body(randomBody)
+                .userId(randomUserId).build();
+
+        response = helper.createPost(postDTO);
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
@@ -51,14 +55,14 @@ public class Sample extends TestBase {
 
         verifyResponseCode(statusCode, statusCodes.SC_CREATED);
 
-        String title = response.jsonPath().getString(TITLE);
-        String body =  response.jsonPath().getString(BODY);
-        String userId = response.jsonPath().getString(USERID);
+        String returnedTitle = response.jsonPath().getString(TITLE);
+        String returnedBody =  response.jsonPath().getString(BODY);
+        String returnedUserId = response.jsonPath().getString(USERID);
         String id = response.jsonPath().getString(ID);
 
-        softAssert.assertEquals(title,"NYC");
-        softAssert.assertEquals(body,"NY City");
-        softAssert.assertEquals(userId,"123");
+        softAssert.assertEquals(returnedTitle,randomTitle);
+        softAssert.assertEquals(returnedBody,randomBody);
+        softAssert.assertEquals(returnedUserId,randomUserId);
         softAssert.assertEquals(id,"101");
 
         softAssert.assertAll();
