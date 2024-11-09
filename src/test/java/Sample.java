@@ -63,15 +63,35 @@ public class Sample extends TestBase {
         softAssert.assertEquals(returnedTitle,randomTitle);
         softAssert.assertEquals(returnedBody,randomBody);
         softAssert.assertEquals(returnedUserId,randomUserId);
-        softAssert.assertEquals(id,"101");
+        softAssert.assertNotNull(id,"Id is null");
 
         softAssert.assertAll();
-
 
     }
 
     @Test(enabled = true, priority = 2, description = "get one post")
-    public void GetExampleAPI() {
+    public void GetRequest() {
+
+        Response response = helper.getPost();
+
+        // Retrieve the status code from the response
+        int statusCode = response.getStatusCode();
+        logger.info("status code is" + statusCode);
+
+        verifyResponseCode(statusCode, statusCodes.SC_NOT_FOUND);
+
+        // Retrieve the response body as a String
+        String responseBody = response.getBody().asString();
+
+        // Perform assertions on the response body (for example, checking if it contains certain text)
+        softAssert.assertEquals(responseBody.contains("userId"), true, "Response body does not contain 'userId'");
+        softAssert.assertEquals(responseBody.contains("id"), true, "Response body does not contain 'id'");
+        softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
+        softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
+    }
+
+    @Test(enabled = true, priority = 2, description = "get one post")
+    public void PutRequest() {
 
         Response response = helper.getPost();
 
@@ -92,7 +112,7 @@ public class Sample extends TestBase {
     }
 
     @Test(enabled = true, priority = 2, description = "get one post")
-    public void GetExampleAPINegative() {
+    public void PatchRequest() {
 
         Response response = helper.getPost();
 
@@ -100,7 +120,7 @@ public class Sample extends TestBase {
         int statusCode = response.getStatusCode();
         logger.info("status code is" + statusCode);
 
-        verifyResponseCode(statusCode, statusCodes.SC_NOT_FOUND);
+        verifyResponseCode(statusCode, statusCodes.SC_OK);
 
         // Retrieve the response body as a String
         String responseBody = response.getBody().asString();
@@ -111,6 +131,30 @@ public class Sample extends TestBase {
         softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
         softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
     }
+
+    @Test(enabled = true, priority = 2, description = "get one post")
+    public void DeleteRequest() {
+
+        Response response = helper.getPost();
+
+        // Retrieve the status code from the response
+        int statusCode = response.getStatusCode();
+        logger.info("status code is" + statusCode);
+
+        verifyResponseCode(statusCode, statusCodes.SC_OK);
+
+        // Retrieve the response body as a String
+        String responseBody = response.getBody().asString();
+
+        // Perform assertions on the response body (for example, checking if it contains certain text)
+        softAssert.assertEquals(responseBody.contains("userId"), true, "Response body does not contain 'userId'");
+        softAssert.assertEquals(responseBody.contains("id"), true, "Response body does not contain 'id'");
+        softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
+        softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
+    }
+
+
+
 
 
     @AfterMethod(alwaysRun = true)

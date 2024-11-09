@@ -26,7 +26,7 @@ public class Helper {
                     .header("Content-type", "application/json")
                     .body(jsonBody)
                     .when()
-                    .post(Routes.base_URL)
+                    .post(Routes.post_URL)
                     .then()
                     .extract().response();
 
