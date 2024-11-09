@@ -48,7 +48,7 @@ public class Helper {
                // .pathParams("id", id)
                 .header("Content-type", "application/json")
                 .when()
-                .get("/posts/1")
+                .get(Routes.get_URL)
                 .then()
                 .extract().response();
 
@@ -56,7 +56,68 @@ public class Helper {
 
     }
 
+    public Response updatePost(PostDTO postDTO) {
+        Response response = null;
+        try {
+            String jsonBody = objectMapper.writeValueAsString(postDTO);
+            System.out.println("Request Body: " + jsonBody);
 
+            response = given()
+                    .header("Content-type", "application/json")
+                    .body(jsonBody)
+                    .when()
+                    .post(Routes.put_URL)
+                    .then()
+                    .extract().response();
+
+            System.out.println("Response Status Code: " + response.getStatusCode());
+            System.out.println("Response Body: " + response.asString());
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace(); // Log the exception
+        }
+
+        return response;
+    }
+
+    public Response partialUpdatePost(PostDTO postDTO) {
+        Response response = null;
+        try {
+            String jsonBody = objectMapper.writeValueAsString(postDTO);
+            System.out.println("Request Body: " + jsonBody);
+
+            response = given()
+                    .header("Content-type", "application/json")
+                    .body(jsonBody)
+                    .when()
+                    .post(Routes.put_URL)
+                    .then()
+                    .extract().response();
+
+            System.out.println("Response Status Code: " + response.getStatusCode());
+            System.out.println("Response Body: " + response.asString());
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace(); // Log the exception
+        }
+
+        return response;
+    }
+
+    public Response deletePost(){
+        Response response = null;
+
+        response = given()
+                // .pathParams("id", id)
+                .header("Content-type", "application/json")
+                .when()
+                .get(Routes.get_URL)
+                .then()
+                .extract().response();
+
+        return response;
+
+    }
 }
 
 

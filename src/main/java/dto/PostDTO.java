@@ -8,7 +8,9 @@ import lombok.Data;
 public class PostDTO {
 
     private String title;
+
     private String body;
+
     private String userId;
 }
 

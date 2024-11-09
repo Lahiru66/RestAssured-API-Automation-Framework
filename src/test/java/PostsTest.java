@@ -16,10 +16,10 @@ import static org.testng.Assert.assertEquals;
 import static validations.CommonValidations.verifyResponseCode;
 import static utils.Constants.*;
 
-public class Sample extends TestBase {
+public class PostsTest extends TestBase {
     public Helper helper;
     public StatusCodes statusCodes;
-    private static final Logger logger = LogManager.getLogger(Sample.class);
+    private static final Logger logger = LogManager.getLogger(PostsTest.class);
     public static SoftAssert softAssert;
     public static Response response;
 
@@ -78,7 +78,7 @@ public class Sample extends TestBase {
         int statusCode = response.getStatusCode();
         logger.info("status code is" + statusCode);
 
-        verifyResponseCode(statusCode, statusCodes.SC_NOT_FOUND);
+        verifyResponseCode(statusCode, statusCodes.SC_OK);
 
         // Retrieve the response body as a String
         String responseBody = response.getBody().asString();
@@ -93,7 +93,16 @@ public class Sample extends TestBase {
     @Test(enabled = true, priority = 2, description = "get one post")
     public void PutRequest() {
 
-        Response response = helper.getPost();
+        String randomTitle = CommonUtils.generateRandomString();
+        String randomBody = CommonUtils.generateRandomString();
+        String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
+
+        PostDTO postDTO = PostDTO.builder()
+                .title(randomTitle)
+                .body(randomBody)
+                .userId(randomUserId).build();
+
+        response = helper.updatePost(postDTO);
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
@@ -101,20 +110,32 @@ public class Sample extends TestBase {
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
-        // Retrieve the response body as a String
-        String responseBody = response.getBody().asString();
+        String returnedTitle = response.jsonPath().getString(TITLE);
+        String returnedBody =  response.jsonPath().getString(BODY);
+        String returnedUserId = response.jsonPath().getString(USERID);
+        String id = response.jsonPath().getString(ID);
 
-        // Perform assertions on the response body (for example, checking if it contains certain text)
-        softAssert.assertEquals(responseBody.contains("userId"), true, "Response body does not contain 'userId'");
-        softAssert.assertEquals(responseBody.contains("id"), true, "Response body does not contain 'id'");
-        softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
-        softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
+        softAssert.assertEquals(returnedTitle,randomTitle);
+        softAssert.assertEquals(returnedBody,randomBody);
+        softAssert.assertEquals(returnedUserId,randomUserId);
+        softAssert.assertNotNull(id,"Id is null");
+
+        softAssert.assertAll();
     }
 
     @Test(enabled = true, priority = 2, description = "get one post")
     public void PatchRequest() {
 
-        Response response = helper.getPost();
+        String randomTitle = CommonUtils.generateRandomString();
+        String randomBody = CommonUtils.generateRandomString();
+        String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
+
+        PostDTO postDTO = PostDTO.builder()
+                .title(randomTitle)
+                .body(randomBody)
+                .userId(randomUserId).build();
+
+        response = helper.partialUpdatePost(postDTO);
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
@@ -122,20 +143,23 @@ public class Sample extends TestBase {
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
-        // Retrieve the response body as a String
-        String responseBody = response.getBody().asString();
+        String returnedTitle = response.jsonPath().getString(TITLE);
+        String returnedBody =  response.jsonPath().getString(BODY);
+        String returnedUserId = response.jsonPath().getString(USERID);
+        String id = response.jsonPath().getString(ID);
 
-        // Perform assertions on the response body (for example, checking if it contains certain text)
-        softAssert.assertEquals(responseBody.contains("userId"), true, "Response body does not contain 'userId'");
-        softAssert.assertEquals(responseBody.contains("id"), true, "Response body does not contain 'id'");
-        softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
-        softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
+        softAssert.assertEquals(returnedTitle,randomTitle);
+        softAssert.assertEquals(returnedBody,randomBody);
+        softAssert.assertEquals(returnedUserId,randomUserId);
+        softAssert.assertNotNull(id,"Id is null");
+
+        softAssert.assertAll();
     }
 
     @Test(enabled = true, priority = 2, description = "get one post")
     public void DeleteRequest() {
 
-        Response response = helper.getPost();
+        Response response = helper.deletePost();
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
@@ -152,8 +176,6 @@ public class Sample extends TestBase {
         softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
         softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
     }
-
-
 
 
 
