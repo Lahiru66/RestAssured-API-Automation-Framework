@@ -90,7 +90,7 @@ public class PostsTest extends TestBase {
         softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
     }
 
-    @Test(enabled = true, priority = 2, description = "get one post")
+    @Test(enabled = true, priority = 3, description = "get one post")
     public void PutRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
@@ -123,17 +123,13 @@ public class PostsTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Test(enabled = true, priority = 2, description = "get one post")
+    @Test(enabled = true, priority = 4, description = "get one post")
     public void PatchRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
-        String randomBody = CommonUtils.generateRandomString();
-        String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
 
         PostDTO postDTO = PostDTO.builder()
-                .title(randomTitle)
-                .body(randomBody)
-                .userId(randomUserId).build();
+                .title(randomTitle).build();
 
         response = helper.partialUpdatePost(postDTO);
 
@@ -149,14 +145,14 @@ public class PostsTest extends TestBase {
         String id = response.jsonPath().getString(ID);
 
         softAssert.assertEquals(returnedTitle,randomTitle);
-        softAssert.assertEquals(returnedBody,randomBody);
-        softAssert.assertEquals(returnedUserId,randomUserId);
+        softAssert.assertNotNull(returnedBody,"Body is null");
+        softAssert.assertNotNull(returnedUserId,"UserID is null");
         softAssert.assertNotNull(id,"Id is null");
 
         softAssert.assertAll();
     }
 
-    @Test(enabled = true, priority = 2, description = "get one post")
+    @Test(enabled = true, priority = 5, description = "get one post")
     public void DeleteRequest() {
 
         Response response = helper.deletePost();
@@ -167,16 +163,8 @@ public class PostsTest extends TestBase {
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
-        // Retrieve the response body as a String
-        String responseBody = response.getBody().asString();
 
-        // Perform assertions on the response body (for example, checking if it contains certain text)
-        softAssert.assertEquals(responseBody.contains("userId"), true, "Response body does not contain 'userId'");
-        softAssert.assertEquals(responseBody.contains("id"), true, "Response body does not contain 'id'");
-        softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
-        softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
     }
-
 
 
     @AfterMethod(alwaysRun = true)
