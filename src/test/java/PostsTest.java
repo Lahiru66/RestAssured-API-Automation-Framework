@@ -32,7 +32,7 @@ public class PostsTest extends TestBase {
         softAssert = new SoftAssert();
     }
 
-    @Test(enabled = true, priority = 1, description = "create posts")
+    @Test(enabled = true, priority = 1, description = "create posts", groups ={"smoke"})
     public void postRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
@@ -66,8 +66,8 @@ public class PostsTest extends TestBase {
 
     }
 
-    @Test(enabled = true, priority = 2, description = "Get one post")
-    public void GetRequest() {
+    @Test(enabled = true, priority = 2, description = "Get one post", groups ={"regression"})
+    public void getRequest() {
 
         Response response = helper.getPost();
 
@@ -90,8 +90,8 @@ public class PostsTest extends TestBase {
 
     }
 
-    @Test(enabled = true, priority = 3, description = "Update one post")
-    public void PutRequest() {
+    @Test(enabled = true, priority = 3, description = "Update one post", groups ={"regression"})
+    public void putRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
@@ -123,8 +123,8 @@ public class PostsTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Test(enabled = true, priority = 4, description = "get one post")
-    public void PatchRequest() {
+    @Test(enabled = true, priority = 4, description = "get one post",groups ={"regression"})
+    public void patchRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
@@ -171,8 +171,8 @@ public class PostsTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Test(enabled = true, priority = 5, description = "Remove one post")
-    public void DeleteRequest() {
+    @Test(enabled = true, priority = 5, description = "Remove one post", groups ={"smoke"})
+    public void deleteRequest() {
 
         Response response = helper.deletePost();
 
