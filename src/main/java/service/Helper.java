@@ -52,6 +52,8 @@ public class Helper {
                 .then()
                 .extract().response();
 
+        System.out.println("Response Body: " + response.asString());
+
         return response;
 
     }
@@ -66,7 +68,7 @@ public class Helper {
                     .header("Content-type", "application/json")
                     .body(jsonBody)
                     .when()
-                    .post(Routes.put_URL)
+                    .put(Routes.put_URL)
                     .then()
                     .extract().response();
 
@@ -90,7 +92,7 @@ public class Helper {
                     .header("Content-type", "application/json")
                     .body(jsonBody)
                     .when()
-                    .post(Routes.put_URL)
+                    .patch(Routes.patch_URL)
                     .then()
                     .extract().response();
 
@@ -111,7 +113,7 @@ public class Helper {
                 // .pathParams("id", id)
                 .header("Content-type", "application/json")
                 .when()
-                .get(Routes.get_URL)
+                .delete(Routes.delete_URL)
                 .then()
                 .extract().response();
 

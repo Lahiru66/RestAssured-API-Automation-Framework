@@ -11,8 +11,6 @@ import dto.PostDTO;
 import utils.CommonUtils;
 import utils.StatusCodes;
 
-import static io.restassured.RestAssured.given;
-import static org.testng.Assert.assertEquals;
 import static validations.CommonValidations.verifyResponseCode;
 import static utils.Constants.*;
 
@@ -32,7 +30,6 @@ public class PostsTest extends TestBase {
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         softAssert = new SoftAssert();
-     //   RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
     }
 
     @Test(enabled = true, priority = 1, description = "create posts")
@@ -56,20 +53,20 @@ public class PostsTest extends TestBase {
         verifyResponseCode(statusCode, statusCodes.SC_CREATED);
 
         String returnedTitle = response.jsonPath().getString(TITLE);
-        String returnedBody =  response.jsonPath().getString(BODY);
+        String returnedBody = response.jsonPath().getString(BODY);
         String returnedUserId = response.jsonPath().getString(USERID);
         String id = response.jsonPath().getString(ID);
 
-        softAssert.assertEquals(returnedTitle,randomTitle);
-        softAssert.assertEquals(returnedBody,randomBody);
-        softAssert.assertEquals(returnedUserId,randomUserId);
-        softAssert.assertNotNull(id,"Id is null");
+        softAssert.assertEquals(returnedTitle, randomTitle);
+        softAssert.assertEquals(returnedBody, randomBody);
+        softAssert.assertEquals(returnedUserId, randomUserId);
+        softAssert.assertNotNull(id, "Id is null");
 
         softAssert.assertAll();
 
     }
 
-    @Test(enabled = true, priority = 2, description = "get one post")
+    @Test(enabled = true, priority = 2, description = "Get one post")
     public void GetRequest() {
 
         Response response = helper.getPost();
@@ -88,9 +85,12 @@ public class PostsTest extends TestBase {
         softAssert.assertEquals(responseBody.contains("id"), true, "Response body does not contain 'id'");
         softAssert.assertEquals(responseBody.contains("title"), true, "Response body does not contain 'title'");
         softAssert.assertEquals(responseBody.contains("body"), true, "Response body does not contain 'body'");
+
+        softAssert.assertAll();
+
     }
 
-    @Test(enabled = true, priority = 3, description = "get one post")
+    @Test(enabled = true, priority = 3, description = "Update one post")
     public void PutRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
@@ -111,14 +111,14 @@ public class PostsTest extends TestBase {
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
         String returnedTitle = response.jsonPath().getString(TITLE);
-        String returnedBody =  response.jsonPath().getString(BODY);
+        String returnedBody = response.jsonPath().getString(BODY);
         String returnedUserId = response.jsonPath().getString(USERID);
         String id = response.jsonPath().getString(ID);
 
-        softAssert.assertEquals(returnedTitle,randomTitle);
-        softAssert.assertEquals(returnedBody,randomBody);
-        softAssert.assertEquals(returnedUserId,randomUserId);
-        softAssert.assertNotNull(id,"Id is null");
+        softAssert.assertEquals(returnedTitle, randomTitle);
+        softAssert.assertEquals(returnedBody, randomBody);
+        softAssert.assertEquals(returnedUserId, randomUserId);
+        softAssert.assertNotNull(id, "Id is null");
 
         softAssert.assertAll();
     }
@@ -127,9 +127,28 @@ public class PostsTest extends TestBase {
     public void PatchRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
+        String randomBody = CommonUtils.generateRandomString();
+        String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
 
         PostDTO postDTO = PostDTO.builder()
-                .title(randomTitle).build();
+                .title(randomTitle)
+                .body(randomBody)
+                .userId(randomUserId).build();
+
+        response = helper.createPost(postDTO);
+
+        String returnedTitle = response.jsonPath().getString(TITLE);
+        String returnedBody = response.jsonPath().getString(BODY);
+        String returnedUserId = response.jsonPath().getString(USERID);
+        String id = response.jsonPath().getString(ID);
+
+        String randomTitle2 = CommonUtils.generateRandomString();
+
+        postDTO = PostDTO.builder()
+                .title(randomTitle2)
+                .body(returnedBody)
+                .userId(returnedUserId)
+                .build();
 
         response = helper.partialUpdatePost(postDTO);
 
@@ -139,20 +158,20 @@ public class PostsTest extends TestBase {
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
-        String returnedTitle = response.jsonPath().getString(TITLE);
-        String returnedBody =  response.jsonPath().getString(BODY);
-        String returnedUserId = response.jsonPath().getString(USERID);
-        String id = response.jsonPath().getString(ID);
+        String returnedTitle2 = response.jsonPath().getString(TITLE);
+        String returnedBody2 = response.jsonPath().getString(BODY);
+        String returnedUserId2 = response.jsonPath().getString(USERID);
+        String id2 = response.jsonPath().getString(ID);
 
-        softAssert.assertEquals(returnedTitle,randomTitle);
-        softAssert.assertNotNull(returnedBody,"Body is null");
-        softAssert.assertNotNull(returnedUserId,"UserID is null");
-        softAssert.assertNotNull(id,"Id is null");
+        softAssert.assertEquals(returnedTitle2, randomTitle2);
+        softAssert.assertNotNull(returnedBody2, "Body is null");
+        softAssert.assertNotNull(returnedUserId2, "UserID is null");
+        softAssert.assertNotNull(id2, "Id is null");
 
         softAssert.assertAll();
     }
 
-    @Test(enabled = true, priority = 5, description = "get one post")
+    @Test(enabled = true, priority = 5, description = "Remove one post")
     public void DeleteRequest() {
 
         Response response = helper.deletePost();
