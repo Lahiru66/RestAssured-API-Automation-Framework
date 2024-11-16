@@ -1,6 +1,6 @@
 <h1 align="center"> API Automation Framework</h1> <br>
 
-## Table of Contents
+## Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
