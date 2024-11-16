@@ -1,7 +1,7 @@
-<h1 align="center"> API Testing - Java - using Rest Assured & Cucumber libraries in Bdd framework (GET, POST, PUT, DELETE) apis validation  </h1> <br>
+<h1 align="center"> API Automation Framework</h1> <br>
 
 <p align="center">
-  Description: This is a demo project on java tech for testing some real time sample apis from https://fakestoreapi.com/ to perform all the verbs (GET, POST, PUT, DELETE) apis validation
+  Description: This is a demo project on java tech for testing some real time sample apis from https://jsonplaceholder.typicode.com to perform all the verbs (GET, POST, PUT, ,PATCH, DELETE) apis validation
  the apis used in this example is 
  GET: https://fakestoreapi.com/products
 POST: https://fakestoreapi.com/products
@@ -22,8 +22,6 @@ DELETE: https://fakestoreapi.com/products/{productnumber}
 
 ## Manual Verification:
 
-perform GET API - validate response code and response body
-GET
 [![img.png](API automation framework.jpg)](https://github.com/Lahiru66/RestAssured-API-Automation-Framework/blob/main/API%20automation%20framework.jpg)
 
 
