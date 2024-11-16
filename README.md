@@ -24,7 +24,7 @@ DELETE: https://fakestoreapi.com/products/{productnumber}
 
 perform GET API - validate response code and response body
 GET
-![img.png](img.png)
+![img.png](API automation framework.jpg)
 
 POST API- validate response code and response body
 POST:
