@@ -29,7 +29,7 @@ GET
 
 POST API- validate response code and response body
 POST:
-![img_1.png](img_1.png)
+![framework.jpg](framework.jpg)
 
 PUT API- validate response code and response body
 PUT:
