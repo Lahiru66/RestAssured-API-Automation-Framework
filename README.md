@@ -25,10 +25,10 @@ DELETE: https://fakestoreapi.com/products/{productnumber}
 
 ## Features
 
-Data driven testing
-Custom validations 
-Parallel execution
-Test Reports
+- Data driven testing
+- Custom validations 
+- Parallel execution
+- Test Reports
 
 ## Requirements
 
