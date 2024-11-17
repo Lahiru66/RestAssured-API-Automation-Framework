@@ -13,11 +13,11 @@
 This is a sample API automation project for testing some real time sample apis from https://jsonplaceholder.typicode.com to perform all the verbs (GET, POST, PUT,PATCH, DELETE) apis validation
 
 the apis used in this example is 
-- GET: [https://fakestoreapi.com/products](https://jsonplaceholder.typicode.com)
-- POST:  [https://fakestoreapi.com/products](https://jsonplaceholder.typicode.com)
-- PUT:  [https://fakestoreapi.com/products](https://jsonplaceholder.typicode.com)
-- PATCH:  [https://fakestoreapi.com/products](https://jsonplaceholder.typicode.com)
-- DELETE: [https://fakestoreapi.com/products](https://jsonplaceholder.typicode.com)
+- GET: [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com)
+- POST:  [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com)
+- PUT:  [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com)
+- PATCH:  [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com)
+- DELETE: [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com)
   
 ## Framework Architecture 
 
@@ -36,7 +36,6 @@ the apis used in this example is
 
 * [Java 11 SDK](https://www.oracle.com/au/java/technologies/javase/jdk11-archive-downloads.html)
 * [Maven](https://maven.apache.org/download.cgi)
-* [ChromeDriver](https://chromedriver.chromium.org/downloads)
 
 ## Reporting
 
