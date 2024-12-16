@@ -217,7 +217,6 @@ public class PostsTest extends TestBase {
 
     }
 
-
     @AfterMethod(alwaysRun = true)
     public void cleanup() {
         response = null;
