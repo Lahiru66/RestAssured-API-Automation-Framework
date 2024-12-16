@@ -43,8 +43,8 @@ pipeline {
                   allure([
                            includeProperties: false, // Set to true if you want to include additional properties
                            jdk: '', // Optional, specify JDK if needed
-                           results: [[path: 'target/allure-results']], // Specify the directory for Allure results
-                           allureVersion: 'allure'
+                           results: [[path: 'target/allure-results']] // Specify the directory for Allure results
+
                        ])
             }
         }
