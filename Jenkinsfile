@@ -12,13 +12,6 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                // Checkout your project from GitHub repository
-                git url: 'https://github.com/Lahiru66/RestAssured-API-Automation-Framework.git'
-            }
-        }
-
         stage('Checkout Code') {
             steps {
                 git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/Lahiru66/RestAssured-API-Automation-Framework.git'
