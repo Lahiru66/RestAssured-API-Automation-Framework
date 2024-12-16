@@ -19,6 +19,12 @@ pipeline {
             }
         }
 
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Lahiru66/RestAssured-API-Automation-Framework.git'
+            }
+        }
+
         stage('Build') {
             steps {
                 // Run Maven or Gradle to build the project
