@@ -79,23 +79,22 @@ pipeline {
          stage('Build Docker Image') {
              steps {
                  script {
-                       def jarPath = 'target\\RestAssuredAssignment-1.0-SNAPSHOT.jar'
+                     // Debug: Check JAR file existence using bat
+                               bat """
+                                   if exist "target\\RestAssuredAssignment-1.0-SNAPSHOT.jar" (
+                                       echo JAR file exists, proceeding with Docker build.
+                                   ) else (
+                                       echo JAR file not found. Build failed!
+                                       exit 1
+                                   )
+                               """
 
-                          // Debug: Check if fileExists is working correctly
-                                   echo "Checking if file exists: ${fileExists(jarPath)}"
+                               // Define the image tag using the Jenkins build number
+                               def imageTag = "${BUILD_NUMBER}" // Resolve Jenkins variable
+                               echo "Building Docker image with tag: $imageTag"
 
-                                     if (fileExists(jarPath)) {
-                                               echo 'JAR file exists, proceeding with Docker build.'
-
-                                               // Define the image tag using the Jenkins build number
-                                               def imageTag = "${BUILD_NUMBER}" // Resolve Jenkins variable
-                                               echo "Building Docker image with tag: $imageTag"
-
-                                               // Build the Docker image with the generated tag
-                                               bat "docker build -t $IMAGE_NAME:$imageTag ."
-                                           } else {
-                                               error "JAR file not found. Build failed!"
-                                           }
+                               // Build the Docker image with the generated tag
+                               bat "docker build -t $IMAGE_NAME:$imageTag ."
                         }
                     }
                 }
