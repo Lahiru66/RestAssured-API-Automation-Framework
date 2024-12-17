@@ -81,7 +81,7 @@ pipeline {
                  script {
                      // Debug: Check JAR file existence using bat
                                bat """
-                                   if exist "target\\RestAssuredAssignment-1.0-SNAPSHOT.jar" (
+                                   if exist "target/RestAssuredAssignment-1.0-SNAPSHOT.jar" (
                                        echo JAR file exists, proceeding with Docker build.
                                    ) else (
                                        echo JAR file not found. Build failed!
