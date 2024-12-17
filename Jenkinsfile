@@ -79,8 +79,11 @@ pipeline {
          stage('Build Docker Image') {
                     steps {
                         script {
+
+                         // Verify if file exists with absolute path
+                                    def jarPath = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Test Pipeline 1\\target\\RestAssuredAssignment-1.0-SNAPSHOT.jar'
                         // Ensure the JAR exists before building the Docker image
-                                          if (fileExists('target\\RestAssuredAssignment-1.0-SNAPSHOT.jar')) {
+                                          if (fileExists(jarPath)) {
                                                echo 'JAR file exists, proceeding with Docker build.'
 
                                                // Define the image tag using the Jenkins build number
