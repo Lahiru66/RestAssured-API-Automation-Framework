@@ -79,7 +79,7 @@ pipeline {
          stage('Build Docker Image') {
              steps {
                  script {
-                       def jarPath = 'target/RestAssuredAssignment-1.0-SNAPSHOT.jar'
+                       def jarPath = 'target\\RestAssuredAssignment-1.0-SNAPSHOT.jar'
 
                           // Debug: Check if fileExists is working correctly
                                    echo "Checking if file exists: ${fileExists(jarPath)}"
