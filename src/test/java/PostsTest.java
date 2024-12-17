@@ -214,7 +214,6 @@ public class PostsTest extends TestBase {
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
-
     }
 
     @AfterMethod(alwaysRun = true)
