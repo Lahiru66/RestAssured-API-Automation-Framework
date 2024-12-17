@@ -79,7 +79,9 @@ pipeline {
          stage('Build Docker Image') {
                     steps {
                         script {
-                                   def jarPath = 'target/RestAssuredAssignment-1.0-SNAPSHOT.jar'
+                                   def jarPath = '/target/ RestAssuredAssignment-1.0-SNAPSHOT.jar'
+
+
                                           if (fileExists(jarPath)) {
                                                echo 'JAR file exists, proceeding with Docker build.'
 
