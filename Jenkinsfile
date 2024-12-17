@@ -61,7 +61,7 @@ pipeline {
                     steps {
                         script {
                         // Ensure the JAR exists before building the Docker image
-                                           if (fileExists('./target/RestAssuredAssignment-1.0-SNAPSHOT.jar')) {
+                                          if (fileExists('target\\RestAssuredAssignment-1.0-SNAPSHOT.jar')) {
                                                echo 'JAR file exists, proceeding with Docker build.'
 
                                                // Define the image tag using the Jenkins build number
