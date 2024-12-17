@@ -60,8 +60,9 @@ pipeline {
          stage('Build Docker Image') {
                     steps {
                         script {
-                            // Build the Docker image
-                          bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'
+                         def imageTag = "${BUILD_NUMBER}" // Resolve Jenkins variable
+                                     echo "Building Docker image with tag: $imageTag"
+                                     bat "docker build -t techguy6/rest-assured:${imageTag} ."
                         }
                     }
                 }
