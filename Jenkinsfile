@@ -6,8 +6,8 @@ pipeline {
         JAVA_HOME = 'C:/Program Files/Java/openjdk-17_windows-x64_bin/jdk-17'
         DOCKER_USERNAME = 'techguy6'
         DOCKER_PASSWORD = 'dockercool'
-        IMAGE_NAME = 'techguy6/rest assured'
-        IMAGE_TAG = '${BUILD_NUMBER}'
+        IMAGE_NAME = 'techguy6/rest-assured'
+        IMAGE_TAG = "${BUILD_NUMBER}"
 
     }
 
@@ -20,10 +20,11 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Run Maven or Gradle to build the project
-                script {
-                    sh './mvn clean install' // Or use Gradle: './gradlew build'
-                }
+                 if (isUnix()) {
+                           sh './mvn clean install'
+                       } else {
+                           bat 'mvn clean install'
+                   }
             }
         }
 
@@ -36,6 +37,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Publish Allure Results') {
             steps {
