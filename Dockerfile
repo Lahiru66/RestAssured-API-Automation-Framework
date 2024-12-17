@@ -5,9 +5,9 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the JAR file into the container (replace this with your actual JAR file name)
-COPY target/RestAssuredAssignment-1.0-SNAPSHOT.jar /app/RestAssuredAssignment-1.0-SNAPSHOT.jar
+COPY ./target/RestAssuredAssignment-1.0-SNAPSHOT.jar /app/RestAssuredAssignment-1.0-SNAPSHOT.jar
 
 # Run the application
-CMD ["java", "-jar", "RestAssuredAssignment-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/app/RestAssuredAssignment-1.0-SNAPSHOT.jar"]
 
 
