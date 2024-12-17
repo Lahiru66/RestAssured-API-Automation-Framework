@@ -27,6 +27,15 @@ pipeline {
             }
         }
 
+        stage('List Target Directory') {
+            steps {
+                script {
+                    bat 'dir target'  // List the contents of the target directory
+                }
+            }
+        }
+
+
         stage('Run Tests') {
             steps {
                 // Run your API tests (e.g., REST Assured tests)
