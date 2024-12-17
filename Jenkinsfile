@@ -60,9 +60,19 @@ pipeline {
          stage('Build Docker Image') {
                     steps {
                         script {
-                         def imageTag = "${BUILD_NUMBER}" // Resolve Jenkins variable
-                                     echo "Building Docker image with tag: $imageTag"
-                                     bat "docker build -t techguy6/rest-assured:${imageTag} ."
+                        // Ensure the JAR exists before building the Docker image
+                                           if (fileExists('target/RestAssuredAssignment-1.0-SNAPSHOT.jar')) {
+                                               echo 'JAR file exists, proceeding with Docker build.'
+
+                                               // Define the image tag using the Jenkins build number
+                                               def imageTag = "${BUILD_NUMBER}" // Resolve Jenkins variable
+                                               echo "Building Docker image with tag: $imageTag"
+
+                                               // Build the Docker image with the generated tag
+                                               bat "docker build -t $IMAGE_NAME:$imageTag ."
+                                           } else {
+                                               error "JAR file not found. Build failed!"
+                                           }
                         }
                     }
                 }
