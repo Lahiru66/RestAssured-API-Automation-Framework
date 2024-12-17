@@ -81,10 +81,10 @@ pipeline {
                         script {
 
                              // Print the target directory contents to verify JAR file presence
-                                    bat 'dir C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Test Pipeline 1\\target'
+                                   bat 'dir "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Test Pipeline 1\\target"'
 
                                     // Check if the JAR file exists using the absolute path
-                                    def jarPath = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Test Pipeline 1\\target\\RestAssuredAssignment-1.0-SNAPSHOT.jar'
+                                   def jarPath = 'target/RestAssuredAssignment-1.0-SNAPSHOT.jar'
 
                                     bat """
                                         if exist "${jarPath}" (
