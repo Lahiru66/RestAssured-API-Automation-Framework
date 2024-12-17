@@ -7,7 +7,7 @@ pipeline {
         DOCKER_USERNAME = 'techguy6'
         DOCKER_PASSWORD = 'dockercool'
         IMAGE_NAME = 'techguy6/rest-assured'
-        IMAGE_TAG = "${BUILD_NUMBER}"
+        IMAGE_TAG = '${BUILD_NUMBER}'
 
     }
 
@@ -31,8 +31,7 @@ pipeline {
             steps {
                 // Run your API tests (e.g., REST Assured tests)
                 script {
-                      // Run your tests, generating Allure results
-                     sh 'mvn clean test -Dallure.results.directory=target/allure-results'
+                    bat 'mvn clean test -Dallure.results.directory=target/allure-results'
                 }
             }
         }
@@ -53,7 +52,7 @@ pipeline {
         stage('Docker Login') {
                     steps {
                         script {
-                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                           bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
                         }
                     }
                 }
@@ -62,7 +61,7 @@ pipeline {
                     steps {
                         script {
                             // Build the Docker image
-                            sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
+                           bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG%'
                         }
                     }
                 }
@@ -71,7 +70,7 @@ pipeline {
                     steps {
                         script {
                             // Push the Docker image to Docker Hub
-                            sh "docker push $IMAGE_NAME:$IMAGE_TAG"
+                           bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                         }
                     }
                 }
