@@ -100,14 +100,14 @@ pipeline {
                                """
 
                   // Ensure the IMAGE_TAG resolves correctly in the batch script
-                            def imageTag = "${BUILD_NUMBER}" // Jenkins build number
+                            def imageTag = "${BUILD_NUMBER}".replaceAll("[^a-zA-Z0-9._-]", "_")
                             echo "Building Docker image with tag: ${imageTag}"
 
                             // Use IMAGE_TAG directly and make sure the variable is resolved correctly
                             bat """
                                 docker build -t ${IMAGE_NAME}:${imageTag} .
                             """
-                             env.IMAGE_TAG = imageTag // Make imageTag available globally
+                            env.IMAGE_TAG = imageTag // Make imageTag available globally
                         }
                     }
                 }
@@ -115,8 +115,12 @@ pipeline {
                 stage('Push Docker Image') {
                     steps {
                         script {
-                                 echo "Pushing Docker image: ${IMAGE_NAME}:${env.IMAGE_TAG}"
-                                 bat "docker push ${IMAGE_NAME}:${env.IMAGE_TAG}"
+                               echo "Pushing Docker image: ${IMAGE_NAME}:${env.IMAGE_TAG}"
+
+                               // Push the Docker image using the globally set IMAGE_TAG
+                               bat """
+                                   docker push ${IMAGE_NAME}:${env.IMAGE_TAG}
+                               """
                         }
                     }
                 }
