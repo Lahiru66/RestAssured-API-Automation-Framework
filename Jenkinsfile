@@ -107,6 +107,7 @@ pipeline {
                             bat """
                                 docker build -t ${IMAGE_NAME}:${imageTag} .
                             """
+                             env.IMAGE_TAG = imageTag // Make imageTag available globally
                         }
                     }
                 }
@@ -114,13 +115,8 @@ pipeline {
                 stage('Push Docker Image') {
                     steps {
                         script {
-                                     // Print the image details to verify they are correct
-                                       echo "Pushing Docker image: ${IMAGE_NAME}:${imageTag}"
-
-                                     // Push the Docker image with the correct tag
-                                       bat """
-                                           docker push ${IMAGE_NAME}:${imageTag}
-                                       """
+                                 echo "Pushing Docker image: ${IMAGE_NAME}:${env.IMAGE_TAG}"
+                                 bat "docker push ${IMAGE_NAME}:${env.IMAGE_TAG}"
                         }
                     }
                 }
