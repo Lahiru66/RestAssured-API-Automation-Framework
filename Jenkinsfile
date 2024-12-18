@@ -7,7 +7,7 @@ pipeline {
         DOCKER_USERNAME = 'techguy6'
         DOCKER_PASSWORD = 'dockercool'
         IMAGE_NAME = 'techguy6/rest-assured'
-        IMAGE_TAG = '${BUILD_NUMBER}'
+      //  IMAGE_TAG = '${BUILD_NUMBER}'
 
     }
 
@@ -100,14 +100,16 @@ pipeline {
                                """
 
                   // Ensure the IMAGE_TAG resolves correctly in the batch script
-                            def imageTag = "${BUILD_NUMBER}".replaceAll("[^a-zA-Z0-9._-]", "_")
-                            echo "Building Docker image with tag: ${imageTag}"
+                       def imageTag = env.BUILD_NUMBER // Use Jenkins' environment variable
+                       echo "Building Docker image with tag: ${imageTag}"
 
-                            // Use IMAGE_TAG directly and make sure the variable is resolved correctly
-                            bat """
-                                docker build -t ${IMAGE_NAME}:${imageTag} .
-                            """
-                            env.IMAGE_TAG = imageTag // Make imageTag available globally
+                       // Build the Docker image
+                       bat """
+                           docker build -t ${IMAGE_NAME}:${imageTag} .
+                       """
+                       // Set IMAGE_TAG globally for later stages
+                       env.IMAGE_TAG = imageTag
+
                         }
                     }
                 }
