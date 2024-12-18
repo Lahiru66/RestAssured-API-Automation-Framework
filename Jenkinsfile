@@ -57,6 +57,14 @@ pipeline {
             }
         }
 
+         stage('Print current directory and files') {
+                         steps{
+                             script {
+                                 bat 'echo Current working directory: %cd%' // Print current directory
+                                 bat 'dir target' // List files in the current directory
+                               }
+                         }
+                   }
 
         stage('Docker Login') {
                     steps {
@@ -113,9 +121,9 @@ pipeline {
 
     post {
         always {
-            // This block runs after every build (success or failure)
-            echo 'Cleaning up...'
-            // Clean up work, like removing temporary files, can be done here.
+           echo 'Cleaning up...'
+           // Example: Clean up temporary directories, logs, etc., but leave `target` intact.
+           //bat 'del /q /s *.tmp'  // Deletes .tmp files but not the JAR or target folder
         }
 
         success {
