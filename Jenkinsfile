@@ -70,7 +70,7 @@ pipeline {
                  steps{
                      script {
                          bat 'echo Current working directory: %cd%' // Print current directory
-                         bat 'dir' // List files in the current directory
+                         bat 'dir target' // List files in the current directory
                        }
                  }
            }
