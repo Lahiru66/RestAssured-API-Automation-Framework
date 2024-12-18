@@ -57,7 +57,7 @@ pipeline {
             }
         }
 
-         stage('Print current directory and files') {
+         stage('Print current directory and files 1') {
                          steps{
                              script {
                                  bat 'echo Current working directory: %cd%' // Print current directory
@@ -74,7 +74,7 @@ pipeline {
                     }
                 }
 
-        stage('Print current directory and files') {
+        stage('Print current directory and files 2') {
                  steps{
                      script {
                          bat 'echo Current working directory: %cd%' // Print current directory
