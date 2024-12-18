@@ -66,15 +66,12 @@ pipeline {
                     }
                 }
 
-
-         stage('Print Current Working Directory') {
-             steps {
-                 script {
-                     bat 'echo %CD%'  // Print the current working directory in Windows
-                 }
+         steps('Print Current Working Directory and list files'){
+             script {
+                 bat 'echo Current working directory: %cd%' // Print current directory
+                 bat 'dir' // List files in the current directory
              }
          }
-
 
          stage('Build Docker Image') {
              steps {
