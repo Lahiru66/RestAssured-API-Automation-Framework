@@ -99,12 +99,10 @@ pipeline {
                                    )
                                """
 
-                               // Define the image tag using the Jenkins build number
-                               def imageTag = "${BUILD_NUMBER}" // Resolve Jenkins variable
-                               echo "Building Docker image with tag: $imageTag"
 
-                               // Build the Docker image with the generated tag
-                               bat "docker build -t $IMAGE_NAME:$imageTag ."
+                         echo "Building Docker image with tag: ${IMAGE_TAG}"
+                         // Use IMAGE_TAG directly for the tag
+                         bat "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                         }
                     }
                 }
@@ -112,8 +110,9 @@ pipeline {
                 stage('Push Docker Image') {
                     steps {
                         script {
-                            // Push the Docker image to Docker Hub
-                           bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
+                                    echo "Pushing Docker image: ${IMAGE_NAME}:${IMAGE_TAG}"
+                                    // Push the Docker image with the correct tag
+                                    bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
                         }
                     }
                 }
