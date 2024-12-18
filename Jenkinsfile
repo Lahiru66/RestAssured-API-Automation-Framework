@@ -40,7 +40,7 @@ pipeline {
             steps {
                 // Run your API tests (e.g., REST Assured tests)
                 script {
-                    bat 'mvn clean test -Dallure.results.directory=target/allure-results'
+                    bat 'mvn test -Dallure.results.directory=target/allure-results'
                 }
             }
         }
