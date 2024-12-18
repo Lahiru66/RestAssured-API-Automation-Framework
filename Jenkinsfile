@@ -71,9 +71,9 @@ pipeline {
                      script {
                          bat 'echo Current working directory: %cd%' // Print current directory
                          bat 'dir' // List files in the current directory
-             }
-         }
-
+                       }
+                 }
+           }
          stage('Build Docker Image') {
              steps {
                  script {
@@ -109,7 +109,7 @@ pipeline {
                         }
                     }
                 }
-    }
+            }
 
     post {
         always {
