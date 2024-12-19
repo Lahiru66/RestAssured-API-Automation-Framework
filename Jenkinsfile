@@ -99,16 +99,10 @@ pipeline {
     post {
         always {
           emailext(
-                      subject: "Build Status: ${currentBuild.currentResult}",
-                      body: """
-                          Build Status: ${currentBuild.currentResult}
-                          Project: ${env.JOB_NAME}
-                          Build Number: ${env.BUILD_NUMBER}
-                          Console Output: ${env.BUILD_URL}/console
-                      """,
-                      to: "lahirukasun666@gmail.com"
+                     subject: "Build Notification: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                     body: "The build result is: ${currentBuild.result}",
+                     to: "lahirukasun666@gmail.com"
                   )
         }
-
     }
 }
