@@ -121,7 +121,6 @@ public class PostsTest extends TestBase {
         softAssert.assertAll();
 
     }
-
     @Test(enabled = true, priority = 3, description = "Update one post", groups ={"regression"})
     public void putRequest() {
 
