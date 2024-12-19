@@ -99,7 +99,7 @@ pipeline {
           emailext(
                      subject: "Build Notification: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                      body: "The build result is: ${currentBuild.result}",
-                     to: "lahiruk@zone24x7.com"
+                     to: "natalie.gunawardena@yahoo.com"
                   )
         }
     }
