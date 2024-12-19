@@ -23,7 +23,6 @@ pipeline {
             }
         }
 
-
         stage('Run Tests') {
             steps {
                 script {
@@ -31,7 +30,6 @@ pipeline {
                 }
             }
         }
-
 
         stage('Publish Allure Results') {
             steps {
