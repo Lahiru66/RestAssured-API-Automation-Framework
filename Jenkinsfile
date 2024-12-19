@@ -95,12 +95,15 @@ pipeline {
             }
 
     post {
-        always {
-          emailext(
-                     subject: "Build Notification: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                     body: "The build result is: ${currentBuild.result}",
-                     to: "natalie.gunawardena@yahoo.com"
-                  )
-        }
+        success {
+               mail to: "recipient@example.com",
+                    subject: "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: "Good news! The build for ${env.JOB_NAME} completed successfully."
+           }
+        failure {
+               mail to: "recipient@example.com",
+                    subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: "Oops! The build for ${env.JOB_NAME} failed. Please check the logs."
+           }
     }
 }
