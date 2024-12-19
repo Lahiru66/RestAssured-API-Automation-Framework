@@ -106,11 +106,21 @@ pipeline {
         success {
             // This block runs only if the build is successful
             echo 'Build completed successfully!'
+            emailext(
+                        subject: "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        body: "Good news! The build for ${env.JOB_NAME} completed successfully.",
+                        to: "lahirukasun666@gmail.com"
+                    )
         }
 
         failure {
             // This block runs only if the build fails
             echo 'Build failed.'
+            emailext(
+                        subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        body: "Oops! The build for ${env.JOB_NAME} failed. Please check the logs.",
+                        to: "lahirukasun666@gmail.com"
+                    )
         }
     }
 }
