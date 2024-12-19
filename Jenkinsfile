@@ -98,29 +98,36 @@ pipeline {
 
     post {
         always {
-           echo 'Cleaning up...'
-           // Example: Clean up temporary directories, logs, etc., but leave `target` intact.
-           //bat 'del /q /s *.tmp'  // Deletes .tmp files but not the JAR or target folder
+          emailext(
+                      subject: "Build Status: ${currentBuild.currentResult}",
+                      body: """
+                          Build Status: ${currentBuild.currentResult}
+                          Project: ${env.JOB_NAME}
+                          Build Number: ${env.BUILD_NUMBER}
+                          Console Output: ${env.BUILD_URL}/console
+                      """,
+                      to: "lahirukasun666@gmail.com"
+                  )
         }
 
-        success {
-            // This block runs only if the build is successful
-            echo 'Build completed successfully!'
-            emailext(
-                        subject: "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                        body: "Good news! The build for ${env.JOB_NAME} completed successfully.",
-                        to: "lahirukasun666@gmail.com"
-                    )
-        }
+//         success {
+//             // This block runs only if the build is successful
+//             echo 'Build completed successfully!'
+//             emailext(
+//                         subject: "Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+//                         body: "Good news! The build for ${env.JOB_NAME} completed successfully.",
+//                         to: "lahirukasun666@gmail.com"
+//                     )
+//         }
 
-        failure {
-            // This block runs only if the build fails
-            echo 'Build failed.'
-            emailext(
-                        subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                        body: "Oops! The build for ${env.JOB_NAME} failed. Please check the logs.",
-                        to: "lahirukasun666@gmail.com"
-                    )
-        }
+//         failure {
+//             // This block runs only if the build fails
+//             echo 'Build failed.'
+//             emailext(
+//                         subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+//                         body: "Oops! The build for ${env.JOB_NAME} failed. Please check the logs.",
+//                         to: "lahirukasun666@gmail.com"
+//                     )
+//         }
     }
 }
