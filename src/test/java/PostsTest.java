@@ -67,7 +67,7 @@ public class PostsTest extends TestBase {
 
     }
 
-    @Test(enabled = true, priority = 1, description = "create posts", groups ={"smoke"},dataProvider = "postDataProvider", dataProviderClass = Data.class)
+    @Test(enabled = true, priority = 2, description = "create posts", groups ={"smoke"},dataProvider = "postDataProvider", dataProviderClass = Data.class)
     public void DataDrivenPostRequest(String title, String body, String userId) {
 
         PostDTO postDTO = PostDTO.builder()
@@ -98,7 +98,7 @@ public class PostsTest extends TestBase {
     }
 
 
-    @Test(enabled = true, priority = 2, description = "Get one post", groups ={"regression"})
+    @Test(enabled = true, priority = 3, description = "Get one post", groups ={"regression"})
     public void getRequest() {
 
         Response response = helper.getPost();
@@ -121,7 +121,7 @@ public class PostsTest extends TestBase {
         softAssert.assertAll();
 
     }
-    @Test(enabled = true, priority = 3, description = "Update one post", groups ={"regression"})
+    @Test(enabled = true, priority = 4, description = "Update one post", groups ={"regression"})
     public void putRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
@@ -154,7 +154,7 @@ public class PostsTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Test(enabled = true, priority = 4, description = "get one post",groups ={"regression"})
+    @Test(enabled = true, priority = 5, description = "get one post",groups ={"regression"})
     public void patchRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
@@ -202,7 +202,7 @@ public class PostsTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Test(enabled = true, priority = 5, description = "Remove one post", groups ={"smoke"})
+    @Test(enabled = true, priority = 6, description = "Remove one post", groups ={"smoke"})
     public void deleteRequest() {
 
         Response response = helper.deletePost();
