@@ -36,8 +36,8 @@ the apis used in this example is
 
 * [Java 11 SDK](https://www.oracle.com/au/java/technologies/javase/jdk11-archive-downloads.html)
 * [Maven](https://maven.apache.org/download.cgi)
-* [Jenkins]([https://maven.apache.org/download.cgi](https://www.jenkins.io/download/))
-* [Docker]([https://maven.apache.org/download.cgi](https://www.docker.com/products/docker-desktop/))
+* [Jenkins](https://maven.apache.org/download.cgi](https://www.jenkins.io/download/))
+* [Docker](https://maven.apache.org/download.cgi](https://www.docker.com/products/docker-desktop/))
 
 ## Reporting
 
