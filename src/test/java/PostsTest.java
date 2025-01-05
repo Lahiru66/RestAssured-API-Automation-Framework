@@ -16,7 +16,8 @@ import static utils.Constants.*;
 
 @Listeners(io.qameta.allure.testng.AllureTestNg.class)
 public class PostsTest extends TestBase {
-    private static final Logger logger = LogManager.getLogger(PostsTest.class);
+    private static final Logger generalLogger = LogManager.getLogger(PostsTest.class);
+    private static final Logger listenerLogger = LogManager.getLogger("ListenerLogger");
     public Helper helper;
     public StatusCodes statusCodes;
     public static SoftAssert softAssert;
@@ -35,6 +36,7 @@ public class PostsTest extends TestBase {
 
     @Test(enabled = true, priority = 1, description = "create posts", groups ={"smoke"})
     public void postRequest() {
+        listenerLogger.info("Starting postRequest...");
 
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
@@ -49,7 +51,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is: " + statusCode);
+        generalLogger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_CREATED);
 
@@ -69,7 +71,7 @@ public class PostsTest extends TestBase {
 
     @Test(enabled = true, priority = 2, description = "create posts", groups ={"smoke"},dataProvider = "postDataProvider", dataProviderClass = Data.class)
     public void DataDrivenPostRequest(String title, String body, String userId) {
-
+        listenerLogger.info("Starting DataDrivenPostRequest...");
         PostDTO postDTO = PostDTO.builder()
                 .title(title)
                 .body(body)
@@ -79,7 +81,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is: " + statusCode);
+        generalLogger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_CREATED);
 
@@ -97,15 +99,14 @@ public class PostsTest extends TestBase {
 
     }
 
-
     @Test(enabled = true, priority = 3, description = "Get one post", groups ={"regression"})
     public void getRequest() {
-
+        listenerLogger.info("Starting getRequest...");
         Response response = helper.getPost();
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is: " + statusCode);
+        generalLogger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
@@ -123,6 +124,7 @@ public class PostsTest extends TestBase {
     }
     @Test(enabled = true, priority = 4, description = "Update one post", groups ={"regression"})
     public void putRequest() {
+        listenerLogger.info("Starting putRequest...");
 
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
@@ -137,7 +139,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is: " + statusCode);
+        generalLogger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
@@ -156,6 +158,7 @@ public class PostsTest extends TestBase {
 
     @Test(enabled = true, priority = 5, description = "partial update one post",groups ={"regression"})
     public void patchRequest() {
+        listenerLogger.info("Starting patchRequest...");
 
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
@@ -185,7 +188,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is: " + statusCode);
+        generalLogger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
@@ -204,12 +207,13 @@ public class PostsTest extends TestBase {
 
     @Test(enabled = true, priority = 6, description = "Remove one post", groups ={"smoke"})
     public void deleteRequest() {
+        listenerLogger.info("Starting deleteRequest...");
 
         Response response = helper.deletePost();
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is: " + statusCode);
+        generalLogger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
