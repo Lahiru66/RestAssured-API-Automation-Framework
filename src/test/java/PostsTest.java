@@ -1,24 +1,24 @@
+import io.qameta.allure.Epic;
 import io.restassured.response.Response;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 import service.Helper;
 import dto.PostDTO;
 import utils.CommonUtils;
 import utils.Data;
 import utils.StatusCodes;
+import org.testng.annotations.Listeners;
 
 import static validations.CommonValidations.verifyResponseCode;
 import static utils.Constants.*;
 
+@Listeners(io.qameta.allure.testng.AllureTestNg.class)
 public class PostsTest extends TestBase {
+    private static final Logger logger = LogManager.getLogger(PostsTest.class);
     public Helper helper;
     public StatusCodes statusCodes;
-    private static final Logger logger = LogManager.getLogger(PostsTest.class);
     public static SoftAssert softAssert;
     public static Response response;
 
@@ -49,7 +49,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is" + statusCode);
+        logger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_CREATED);
 
@@ -79,7 +79,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is" + statusCode);
+        logger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_CREATED);
 
@@ -105,7 +105,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is" + statusCode);
+        logger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
@@ -137,7 +137,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is" + statusCode);
+        logger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
@@ -154,7 +154,7 @@ public class PostsTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Test(enabled = true, priority = 5, description = "get one post",groups ={"regression"})
+    @Test(enabled = true, priority = 5, description = "partial update one post",groups ={"regression"})
     public void patchRequest() {
 
         String randomTitle = CommonUtils.generateRandomString();
@@ -185,7 +185,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is" + statusCode);
+        logger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
@@ -209,7 +209,7 @@ public class PostsTest extends TestBase {
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
-        logger.info("status code is" + statusCode);
+        logger.info("status code is: " + statusCode);
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
@@ -219,4 +219,6 @@ public class PostsTest extends TestBase {
         response = null;
     }
 }
+
+
 

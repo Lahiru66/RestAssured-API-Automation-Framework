@@ -2,7 +2,7 @@
 *.class
 
 #log4j
-log4j2.xml
+src/main/resources/log4j2.xml
 
 # Log files
 *.log
