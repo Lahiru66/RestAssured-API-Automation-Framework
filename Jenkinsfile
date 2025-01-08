@@ -23,6 +23,21 @@ pipeline {
             }
         }
 
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {  // Use the same name you configured in Jenkins
+                    bat '''
+                        mvn sonar:sonar ^
+                        -Dsonar.projectKey=rest-assured-api ^
+                        -Dsonar.host.url=http://localhost:9000 ^
+                        -Dsonar.login=sqp_05986ba955ee257e24ecdb62d8f3db1197a61f0d
+                    '''
+                }
+              }
+        }
+
+
         stage('Run Tests') {
             steps {
                 script {

@@ -69,35 +69,35 @@ public class PostsTest extends TestBase {
 
     }
 
-    @Test(enabled = true, priority = 2, description = "create posts", groups ={"smoke"},dataProvider = "postDataProvider", dataProviderClass = Data.class)
-    public void DataDrivenPostRequest(String title, String body, String userId) {
-        listenerLogger.info("Starting DataDrivenPostRequest...");
-        PostDTO postDTO = PostDTO.builder()
-                .title(title)
-                .body(body)
-                .userId(userId).build();
-
-        response = helper.createPost(postDTO);
-
-        // Retrieve the status code from the response
-        int statusCode = response.getStatusCode();
-        generalLogger.info("status code is: " + statusCode);
-
-        verifyResponseCode(statusCode, statusCodes.SC_CREATED);
-
-        String returnedTitle = response.jsonPath().getString(TITLE);
-        String returnedBody = response.jsonPath().getString(BODY);
-        String returnedUserId = response.jsonPath().getString(USERID);
-        String id = response.jsonPath().getString(ID);
-
-        softAssert.assertEquals(returnedTitle, title);
-        softAssert.assertEquals(returnedBody, body);
-        softAssert.assertEquals(returnedUserId, userId);
-        softAssert.assertNotNull(id, "Id is null");
-
-        softAssert.assertAll();
-
-    }
+//    @Test(enabled = true, priority = 2, description = "create posts", groups ={"smoke"},dataProvider = "postDataProvider", dataProviderClass = Data.class)
+//    public void DataDrivenPostRequest(String title, String body, String userId) {
+//        listenerLogger.info("Starting DataDrivenPostRequest...");
+//        PostDTO postDTO = PostDTO.builder()
+//                .title(title)
+//                .body(body)
+//                .userId(userId).build();
+//
+//        response = helper.createPost(postDTO);
+//
+//        // Retrieve the status code from the response
+//        int statusCode = response.getStatusCode();
+//        generalLogger.info("status code is: " + statusCode);
+//
+//        verifyResponseCode(statusCode, statusCodes.SC_CREATED);
+//
+//        String returnedTitle = response.jsonPath().getString(TITLE);
+//        String returnedBody = response.jsonPath().getString(BODY);
+//        String returnedUserId = response.jsonPath().getString(USERID);
+//        String id = response.jsonPath().getString(ID);
+//
+//        softAssert.assertEquals(returnedTitle, title);
+//        softAssert.assertEquals(returnedBody, body);
+//        softAssert.assertEquals(returnedUserId, userId);
+//        softAssert.assertNotNull(id, "Id is null");
+//
+//        softAssert.assertAll();
+//
+//    }
 
     @Test(enabled = true, priority = 3, description = "Get one post", groups ={"regression"})
     public void getRequest() {

@@ -3,6 +3,7 @@
 <suite name="All Test Suite" parallel="methods" thread-count="2">
     <listeners>
         <listener class-name="utils.TestListener"/>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>
     <test verbose="2" preserve-order="true" name="C:/Users/Lahiru/Desktop/RestAssuredProject/src/test/java/PostsTest.java">
         <classes>
@@ -10,3 +11,4 @@
         </classes>
     </test>
 </suite>
+
