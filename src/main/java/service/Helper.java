@@ -125,6 +125,10 @@ public class Helper {
                 .then()
                 .extract().response();
 
+
+        System.out.println("Response Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.asString());
+
         return response;
 
     }

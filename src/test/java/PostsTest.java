@@ -102,7 +102,7 @@ public class PostsTest extends TestBase {
     @Test(enabled = true, priority = 3, description = "Get one post", groups ={"regression"})
     public void getRequest() {
         listenerLogger.info("Starting getRequest...");
-        Response response = helper.getPost();
+        response = helper.getPost();
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
@@ -135,7 +135,27 @@ public class PostsTest extends TestBase {
                 .body(randomBody)
                 .userId(randomUserId).build();
 
+        response = helper.createPost(postDTO);
+
+//        String returnedTitle = response.jsonPath().getString(TITLE);
+//        String returnedBody = response.jsonPath().getString(BODY);
+//        String returnedUserId = response.jsonPath().getString(USERID);
+//        String id = response.jsonPath().getString(ID);
+
+//        System.out.println(response);
+
+        String randomTitle2 = CommonUtils.generateRandomString();
+        String randomBody2 = CommonUtils.generateRandomString();
+        String randomUserId2 = CommonUtils.generateRandomAlphanumeric(5);
+
+        postDTO = PostDTO.builder()
+                .title(randomTitle2)
+                .body(randomBody2)
+                .userId(randomUserId2).build();
+
         response = helper.updatePost(postDTO);
+
+//        System.out.println(response);
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
@@ -143,15 +163,15 @@ public class PostsTest extends TestBase {
 
         verifyResponseCode(statusCode, statusCodes.SC_OK);
 
-        String returnedTitle = response.jsonPath().getString(TITLE);
-        String returnedBody = response.jsonPath().getString(BODY);
-        String returnedUserId = response.jsonPath().getString(USERID);
-        String id = response.jsonPath().getString(ID);
+        String returnedTitle2 = response.jsonPath().getString(TITLE);
+        String returnedBody2 = response.jsonPath().getString(BODY);
+        String returnedUserId2 = response.jsonPath().getString(USERID);
+        String id2 = response.jsonPath().getString(ID);
 
-        softAssert.assertEquals(returnedTitle, randomTitle);
-        softAssert.assertEquals(returnedBody, randomBody);
-        softAssert.assertEquals(returnedUserId, randomUserId);
-        softAssert.assertNotNull(id, "Id is null");
+        softAssert.assertEquals(returnedTitle2, randomTitle2);
+        softAssert.assertEquals(returnedBody2, randomBody2);
+        softAssert.assertEquals(returnedUserId2, randomUserId2);
+        softAssert.assertNotNull(id2, "Id is null");
 
         softAssert.assertAll();
     }
@@ -171,6 +191,8 @@ public class PostsTest extends TestBase {
 
         response = helper.createPost(postDTO);
 
+        System.out.println(response);
+
         String returnedTitle = response.jsonPath().getString(TITLE);
         String returnedBody = response.jsonPath().getString(BODY);
         String returnedUserId = response.jsonPath().getString(USERID);
@@ -185,6 +207,8 @@ public class PostsTest extends TestBase {
                 .build();
 
         response = helper.partialUpdatePost(postDTO);
+
+        System.out.println(response);
 
         // Retrieve the status code from the response
         int statusCode = response.getStatusCode();
@@ -207,15 +231,32 @@ public class PostsTest extends TestBase {
 
     @Test(enabled = true, priority = 6, description = "Remove one post", groups ={"smoke"})
     public void deleteRequest() {
+
+        String randomTitle = CommonUtils.generateRandomString();
+        String randomBody = CommonUtils.generateRandomString();
+        String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
+
+        PostDTO postDTO = PostDTO.builder()
+                .title(randomTitle)
+                .body(randomBody)
+                .userId(randomUserId).build();
+
+        response = helper.createPost(postDTO);
+
+        int statuCode = response.getStatusCode();
+        generalLogger.info("status code is: " + statuCode);
+
+        verifyResponseCode(statuCode, statusCodes.SC_CREATED);
+
         listenerLogger.info("Starting deleteRequest...");
 
-        Response response = helper.deletePost();
+        response = helper.deletePost();
 
         // Retrieve the status code from the response
-        int statusCode = response.getStatusCode();
-        generalLogger.info("status code is: " + statusCode);
+        int statusCode2 = response.getStatusCode();
+        generalLogger.info("status code is: " + statusCode2);
 
-        verifyResponseCode(statusCode, statusCodes.SC_OK);
+        verifyResponseCode(statusCode2, statusCodes.SC_OK);
 
     }
     @AfterMethod(alwaysRun = true)
@@ -223,3 +264,5 @@ public class PostsTest extends TestBase {
         response = null;
     }
 }
+
+
