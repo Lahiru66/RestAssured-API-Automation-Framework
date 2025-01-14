@@ -1,15 +1,15 @@
-import io.qameta.allure.Epic;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import service.Helper;
-import dto.PostDTO;
+import dto.TestDTO;
 import utils.CommonUtils;
-import utils.Data;
 import utils.StatusCodes;
 import org.testng.annotations.Listeners;
+
+import java.util.List;
 
 import static validations.CommonValidations.verifyResponseCode;
 import static utils.Constants.*;
@@ -22,30 +22,105 @@ public class PostsTest extends TestBase {
     public StatusCodes statusCodes;
     public static SoftAssert softAssert;
     public static Response response;
+    private static String baseUrl;
+    private static String apiKey;
+
+    private static String env;
 
     @BeforeClass(alwaysRun = true)
-    public void serviceSetup() {
-        helper = new Helper();
-        statusCodes = new StatusCodes();
+    @Parameters("env")
+    public void serviceSetup(@Optional("dev") String environment) {
+
+        // Use the provided parameter or fall back to the system property
+        env = environment != null && !environment.isEmpty() ? environment : System.getProperty("env", "dev");
+
+        // Load environment-specific configurations
+        EnvironmentManager.loadConfig(env);
+        baseUrl = EnvironmentManager.getProperty("base.url");
+        apiKey = EnvironmentManager.getProperty("api.key");
+
+        System.out.println("Running test in environment: " + env);
     }
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         softAssert = new SoftAssert();
+        helper = new Helper();
+        statusCodes = new StatusCodes();
     }
+
+    @DataProvider(name = "postDataProvider")
+    public Object[][] postDataProvider() {
+        List<TestDTO> testDataList = EnvironmentManager.loadTestDataList(env, TestDTO[].class);
+        return testDataList.stream().map(data -> new Object[]{data}).toArray(Object[][]::new);
+    }
+
 
     @Test(enabled = true, priority = 1, description = "create posts", groups ={"smoke"})
     public void postRequest() {
         listenerLogger.info("Starting postRequest...");
 
+        // Load static test data
+        TestDTO testData = EnvironmentManager.loadTestData(env, TestDTO.class);
+
+        // Generate dynamic data using CommonUtils
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
         String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
 
-        PostDTO postDTO = PostDTO.builder()
-                .title(randomTitle)
-                .body(randomBody)
-                .userId(randomUserId).build();
+        // Override static data with dynamic values if needed
+        String title = testData.getTitle() != null ? testData.getTitle() : randomTitle;
+        String body = testData.getBody() != null ? testData.getBody() : randomBody;
+        String userId = testData.getUserId() != null ? testData.getUserId() : randomUserId;
+
+        TestDTO testDTO = TestDTO.builder()
+                .title(title)
+                .body(body)
+                .userId(userId)
+                .build();
+
+        response = helper.createPost(testDTO);
+
+        // Retrieve the status code from the response
+        int statusCode = response.getStatusCode();
+        generalLogger.info("status code is: " + statusCode);
+
+        verifyResponseCode(statusCode, statusCodes.SC_CREATED);
+
+        String returnedTitle = response.jsonPath().getString(TITLE);
+        String returnedBody = response.jsonPath().getString(BODY);
+        String returnedUserId = response.jsonPath().getString(USERID);
+        String id = response.jsonPath().getString(ID);
+
+        softAssert.assertEquals(returnedTitle, title);
+        softAssert.assertEquals(returnedBody, body);
+        softAssert.assertEquals(returnedUserId, userId);
+        softAssert.assertNotNull(id, "Id is null");
+
+        softAssert.assertAll();
+
+    }
+
+    @Test(enabled = true, priority = 2, description = "create posts", groups ={"smoke"},dataProvider = "postDataProvider")
+    public void DataDrivenPostRequest(TestDTO testData) {
+        listenerLogger.info("Starting DataDrivenPostRequest...");
+
+        // Generate dynamic data using CommonUtils
+        String randomTitle = CommonUtils.generateRandomString();
+        String randomBody = CommonUtils.generateRandomString();
+        String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
+
+        // Generate dynamic data if static data is missing
+        String title = testData.getTitle() != null ? testData.getTitle() : randomTitle;
+        String body = testData.getBody() != null ? testData.getBody() : randomBody;
+        String userId = testData.getUserId() != null ? testData.getUserId() : randomUserId;
+
+        // Build the PostDTO object
+        TestDTO postDTO = TestDTO.builder()
+                .title(title)
+                .body(body)
+                .userId(userId)
+                .build();
 
         response = helper.createPost(postDTO);
 
@@ -60,44 +135,14 @@ public class PostsTest extends TestBase {
         String returnedUserId = response.jsonPath().getString(USERID);
         String id = response.jsonPath().getString(ID);
 
-        softAssert.assertEquals(returnedTitle, randomTitle);
-        softAssert.assertEquals(returnedBody, randomBody);
-        softAssert.assertEquals(returnedUserId, randomUserId);
+        softAssert.assertEquals(returnedTitle, title);
+        softAssert.assertEquals(returnedBody, body);
+        softAssert.assertEquals(returnedUserId, userId);
         softAssert.assertNotNull(id, "Id is null");
 
         softAssert.assertAll();
 
     }
-
-//    @Test(enabled = true, priority = 2, description = "create posts", groups ={"smoke"},dataProvider = "postDataProvider", dataProviderClass = Data.class)
-//    public void DataDrivenPostRequest(String title, String body, String userId) {
-//        listenerLogger.info("Starting DataDrivenPostRequest...");
-//        PostDTO postDTO = PostDTO.builder()
-//                .title(title)
-//                .body(body)
-//                .userId(userId).build();
-//
-//        response = helper.createPost(postDTO);
-//
-//        // Retrieve the status code from the response
-//        int statusCode = response.getStatusCode();
-//        generalLogger.info("status code is: " + statusCode);
-//
-//        verifyResponseCode(statusCode, statusCodes.SC_CREATED);
-//
-//        String returnedTitle = response.jsonPath().getString(TITLE);
-//        String returnedBody = response.jsonPath().getString(BODY);
-//        String returnedUserId = response.jsonPath().getString(USERID);
-//        String id = response.jsonPath().getString(ID);
-//
-//        softAssert.assertEquals(returnedTitle, title);
-//        softAssert.assertEquals(returnedBody, body);
-//        softAssert.assertEquals(returnedUserId, userId);
-//        softAssert.assertNotNull(id, "Id is null");
-//
-//        softAssert.assertAll();
-//
-//    }
 
     @Test(enabled = true, priority = 3, description = "Get one post", groups ={"regression"})
     public void getRequest() {
@@ -126,34 +171,41 @@ public class PostsTest extends TestBase {
     public void putRequest() {
         listenerLogger.info("Starting putRequest...");
 
+        // Load static test data
+        TestDTO testData = EnvironmentManager.loadTestData(env, TestDTO.class);
+
+        // Generate dynamic data using CommonUtils
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
         String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
 
-        PostDTO postDTO = PostDTO.builder()
-                .title(randomTitle)
-                .body(randomBody)
-                .userId(randomUserId).build();
+        // Override static data with dynamic values if needed
+        String title = testData.getTitle() != null ? testData.getTitle() : randomTitle;
+        String body = testData.getBody() != null ? testData.getBody() : randomBody;
+        String userId = testData.getUserId() != null ? testData.getUserId() : randomUserId;
 
-        response = helper.createPost(postDTO);
+        TestDTO testDTO = TestDTO.builder()
+                .title(title)
+                .body(body)
+                .userId(userId)
+                .build();
 
-//        String returnedTitle = response.jsonPath().getString(TITLE);
-//        String returnedBody = response.jsonPath().getString(BODY);
-//        String returnedUserId = response.jsonPath().getString(USERID);
-//        String id = response.jsonPath().getString(ID);
+        response = helper.createPost(testDTO);
 
 //        System.out.println(response);
 
-        String randomTitle2 = CommonUtils.generateRandomString();
-        String randomBody2 = CommonUtils.generateRandomString();
-        String randomUserId2 = CommonUtils.generateRandomAlphanumeric(5);
+        // Generate dynamic data using CommonUtils
+        randomTitle = CommonUtils.generateRandomString();
+        randomBody = CommonUtils.generateRandomString();
+        randomUserId = CommonUtils.generateRandomAlphanumeric(5);
 
-        postDTO = PostDTO.builder()
-                .title(randomTitle2)
-                .body(randomBody2)
-                .userId(randomUserId2).build();
+        testDTO = TestDTO.builder()
+                .title(randomTitle)
+                .body(randomBody)
+                .userId(randomUserId)
+                .build();
 
-        response = helper.updatePost(postDTO);
+        response = helper.updatePost(testDTO);
 
 //        System.out.println(response);
 
@@ -168,9 +220,9 @@ public class PostsTest extends TestBase {
         String returnedUserId2 = response.jsonPath().getString(USERID);
         String id2 = response.jsonPath().getString(ID);
 
-        softAssert.assertEquals(returnedTitle2, randomTitle2);
-        softAssert.assertEquals(returnedBody2, randomBody2);
-        softAssert.assertEquals(returnedUserId2, randomUserId2);
+        softAssert.assertEquals(returnedTitle2, randomTitle);
+        softAssert.assertEquals(returnedBody2, randomBody);
+        softAssert.assertEquals(returnedUserId2, randomUserId);
         softAssert.assertNotNull(id2, "Id is null");
 
         softAssert.assertAll();
@@ -180,16 +232,26 @@ public class PostsTest extends TestBase {
     public void patchRequest() {
         listenerLogger.info("Starting patchRequest...");
 
+        // Load static test data
+        TestDTO testData = EnvironmentManager.loadTestData(env, TestDTO.class);
+
+        // Generate dynamic data using CommonUtils
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
         String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
 
-        PostDTO postDTO = PostDTO.builder()
-                .title(randomTitle)
-                .body(randomBody)
-                .userId(randomUserId).build();
+        // Override static data with dynamic values if needed
+        String title = testData.getTitle() != null ? testData.getTitle() : randomTitle;
+        String body = testData.getBody() != null ? testData.getBody() : randomBody;
+        String userId = testData.getUserId() != null ? testData.getUserId() : randomUserId;
 
-        response = helper.createPost(postDTO);
+        TestDTO testDTO = TestDTO.builder()
+                .title(title)
+                .body(body)
+                .userId(userId)
+                .build();
+
+        response = helper.createPost(testDTO);
 
         System.out.println(response);
 
@@ -198,15 +260,15 @@ public class PostsTest extends TestBase {
         String returnedUserId = response.jsonPath().getString(USERID);
         String id = response.jsonPath().getString(ID);
 
-        String randomTitle2 = CommonUtils.generateRandomString();
+        randomTitle = CommonUtils.generateRandomString();
 
-        postDTO = PostDTO.builder()
-                .title(randomTitle2)
+        testDTO = TestDTO.builder()
+                .title(randomTitle)
                 .body(returnedBody)
                 .userId(returnedUserId)
                 .build();
 
-        response = helper.partialUpdatePost(postDTO);
+        response = helper.partialUpdatePost(testDTO);
 
         System.out.println(response);
 
@@ -221,7 +283,7 @@ public class PostsTest extends TestBase {
         String returnedUserId2 = response.jsonPath().getString(USERID);
         String id2 = response.jsonPath().getString(ID);
 
-        softAssert.assertEquals(returnedTitle2, randomTitle2);
+        softAssert.assertEquals(returnedTitle2, randomTitle);
         softAssert.assertNotNull(returnedBody2, "Body is null");
         softAssert.assertNotNull(returnedUserId2, "UserID is null");
         softAssert.assertNotNull(id2, "Id is null");
@@ -231,24 +293,33 @@ public class PostsTest extends TestBase {
 
     @Test(enabled = true, priority = 6, description = "Remove one post", groups ={"smoke"})
     public void deleteRequest() {
+        listenerLogger.info("Starting deleteRequest...");
 
+        // Load static test data
+        TestDTO testData = EnvironmentManager.loadTestData(env, TestDTO.class);
+
+        // Generate dynamic data using CommonUtils
         String randomTitle = CommonUtils.generateRandomString();
         String randomBody = CommonUtils.generateRandomString();
         String randomUserId = CommonUtils.generateRandomAlphanumeric(5);
 
-        PostDTO postDTO = PostDTO.builder()
-                .title(randomTitle)
-                .body(randomBody)
-                .userId(randomUserId).build();
+        // Override static data with dynamic values if needed
+        String title = testData.getTitle() != null ? testData.getTitle() : randomTitle;
+        String body = testData.getBody() != null ? testData.getBody() : randomBody;
+        String userId = testData.getUserId() != null ? testData.getUserId() : randomUserId;
 
-        response = helper.createPost(postDTO);
+        TestDTO testDTO = TestDTO.builder()
+                .title(title)
+                .body(body)
+                .userId(userId)
+                .build();
+
+        response = helper.createPost(testDTO);
 
         int statuCode = response.getStatusCode();
         generalLogger.info("status code is: " + statuCode);
 
         verifyResponseCode(statuCode, statusCodes.SC_CREATED);
-
-        listenerLogger.info("Starting deleteRequest...");
 
         response = helper.deletePost();
 

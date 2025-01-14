@@ -2,7 +2,7 @@ package service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dto.PostDTO;
+import dto.TestDTO;
 import endpoints.Routes;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
@@ -20,7 +20,7 @@ public class Helper {
     }
 
     @Step("Creating a post")
-    public Response createPost(PostDTO postDTO) {
+    public Response createPost(TestDTO postDTO) {
         Response response = null;
         try {
             String jsonBody = objectMapper.writeValueAsString(postDTO);
@@ -64,7 +64,7 @@ public class Helper {
     }
 
     @Step("Updating a post")
-    public Response updatePost(PostDTO postDTO) {
+    public Response updatePost(TestDTO postDTO) {
         Response response = null;
         try {
             String jsonBody = objectMapper.writeValueAsString(postDTO);
@@ -89,7 +89,7 @@ public class Helper {
     }
 
     @Step("Partially updating a post")
-    public Response partialUpdatePost(PostDTO postDTO) {
+    public Response partialUpdatePost(TestDTO postDTO) {
         Response response = null;
         try {
             String jsonBody = objectMapper.writeValueAsString(postDTO);

@@ -2,10 +2,12 @@ package dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.jackson.Jacksonized;
 
 @Data
 @Builder
-public class PostDTO {
+@Jacksonized
+public class TestDTO {
 
     private String title;
 
