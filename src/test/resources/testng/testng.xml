@@ -6,7 +6,7 @@
         <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>
     <test verbose="2" preserve-order="true" name="C:/Users/Lahiru/Desktop/RestAssuredProject/src/test/java/PostsTest.java">
-        <parameter name="env" value="qa"/>
+        <parameter name="env" value="dev"/>
         <classes>
             <class name="PostsTest"/>
         </classes>
