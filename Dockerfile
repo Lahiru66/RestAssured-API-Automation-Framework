@@ -9,5 +9,3 @@ COPY ./target/RestAssuredAssignment-1.0-SNAPSHOT.jar /app/RestAssuredAssignment-
 
 # Run the application
 CMD ["java", "-jar", "/app/RestAssuredAssignment-1.0-SNAPSHOT.jar"]
-
-

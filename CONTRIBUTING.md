@@ -21,4 +21,4 @@ First of all, thank you for considering contributing to this project! 🚀 Your 
 ## License
 By contributing, you agree that your contributions will be licensed under the **MIT License** (same as the project).
 
-We look forward to your contributions! 🎉
+I look forward to your contributions! 🎉
