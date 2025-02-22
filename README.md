@@ -16,12 +16,14 @@ This is a sample API automation project designed to test real-time APIs from htt
 * Environment-Specific Data Management - Supports dynamic loading of environment-specific test data, allowing seamless switching between different configurations for various test environments
 * Data Handling - Supports Data-Driven Testing using JSON files
 
-## Requirements
+## Prerequisites
 
-* [Java 11 SDK](https://www.oracle.com/au/java/technologies/javase/jdk11-archive-downloads.html)
-* [Maven](https://maven.apache.org/download.cgi)
-* [Jenkins](https://maven.apache.org/download.cgi](https://www.jenkins.io/download/))
-* [Docker](https://maven.apache.org/download.cgi](https://www.docker.com/products/docker-desktop/))
+* Java
+* Maven
+* TestNG
+* Jenkins
+* Docker
+* SonarCube
 
 ## Reporting
 
