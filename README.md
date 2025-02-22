@@ -48,3 +48,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### © Copyright 2025 Lahiru Kasun
 Unauthorized reproduction or claiming ownership of this project is prohibited.
+
+## ⚠ Disclaimer
+This project is provided **as is**, without any warranty or guarantee of any kind.  
+The author is **not responsible** for any misuse, damage, or unintended consequences  
+arising from the use of this software. By using this project, you agree to the **MIT License** terms  
+and acknowledge that the author holds **no liability** for any issues that may arise.  
+
