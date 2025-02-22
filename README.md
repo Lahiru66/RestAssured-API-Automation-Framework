@@ -1,6 +1,6 @@
 <h1 align="center"> API Automation Framework</h1> <br>
 
-This is a sample API automation project designed to test real-time APIs from https://jsonplaceholder.typicode.com by performing the HTTP methods (GET, POST, PUT, PATCH, DELETE).
+This API automation project designed to test real-time APIs from https://jsonplaceholder.typicode.com by performing the HTTP methods (GET, POST, PUT, PATCH, DELETE).
   
 ## Framework Architecture 
 
@@ -25,11 +25,11 @@ This is a sample API automation project designed to test real-time APIs from htt
 * Docker
 * SonarCube
 
-## Reporting
+## Allure Report
 
 ![report.PNG](report.PNG)
 
-## Pipeline
+## CI/CD Pipeline
 
 ![pipeline.PNG](pipeline.PNG)
 
