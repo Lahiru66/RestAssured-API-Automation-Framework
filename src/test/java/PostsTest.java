@@ -336,5 +336,3 @@ public class PostsTest extends TestBase {
     }
 }
 
-
-
