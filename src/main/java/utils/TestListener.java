@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2025 Lahiru Kasun
+ * Licensed under the MIT License – see the LICENSE file for details.
+ */
+
 package utils;
 
 import org.apache.logging.log4j.LogManager;

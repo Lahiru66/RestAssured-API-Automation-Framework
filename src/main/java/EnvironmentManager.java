@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2025 Lahiru Kasun
+ * Licensed under the MIT License – see the LICENSE file for details.
+ */
+
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;

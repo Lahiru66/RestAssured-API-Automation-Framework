@@ -43,3 +43,8 @@ the apis used in this example is
 
 ![report.PNG](report.PNG)
 
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### © Copyright 2025 Lahiru Kasun
+Unauthorized reproduction or claiming ownership of this project is prohibited.

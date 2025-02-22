@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2025 Lahiru Kasun
+ * Licensed under the MIT License – see the LICENSE file for details.
+ */
+
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
