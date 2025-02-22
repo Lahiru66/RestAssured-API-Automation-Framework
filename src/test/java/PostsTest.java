@@ -32,6 +32,12 @@ public class PostsTest extends TestBase {
 
     private static String env;
 
+    // Static block for watermark in logs
+    static {
+        generalLogger.info("🚀 API Automation Framework by Lahiru Kasun - 2025");
+        listenerLogger.info("🚀 API Automation Framework by Lahiru Kasun - 2025");
+    }
+
     @BeforeClass(alwaysRun = true)
     @Parameters("env")
     public void serviceSetup(@Optional("dev") String environment) {
