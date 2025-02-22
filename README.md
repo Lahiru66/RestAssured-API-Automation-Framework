@@ -1,5 +1,4 @@
 <h1 align="center"> API Automation Framework</h1> <br>
-
 ## Overview
 
 This API automation project is designed to test real-time APIs from https://jsonplaceholder.typicode.com by performing the HTTP methods (GET, POST, PUT, PATCH, DELETE). The framework utilizes Lombok to reduce boilerplate code and Jackson annotations for efficient serialization. TestNG annotations are used to manage test execution, and Log4j2 is implemented for logging, with both general and specific log files maintained. To optimize storage, only the last 7 days of log files are kept. The project integrates a CI/CD pipeline using Jenkins, with Docker for containerization and SonarQube for code analysis. A webhook is configured to trigger the pipeline, and email notifications are sent for build success or failure.
