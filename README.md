@@ -29,6 +29,10 @@ This is a sample API automation project designed to test real-time APIs from htt
 
 ![report.PNG](report.PNG)
 
+## Pipeline
+
+![pipeline.PNG](pipeline.PNG)
+
 ## 📜 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
