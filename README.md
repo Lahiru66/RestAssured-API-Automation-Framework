@@ -1,4 +1,4 @@
-<h1 align="center"> API Automation Framework</h1> <br>
+<h1 align="center">RestAssured API Automation Framework</h1> <br>
 
 ## Overview
 
